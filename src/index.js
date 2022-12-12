@@ -1,8 +1,9 @@
 import { createInterface } from 'node:readline'
-import { stdin as input, stdout as output } from 'node:process'
-import { getUserName } from './utils/username.js'
-import { exit } from './commands/exit.js'
-import { logCurrentDirectory } from './commands/log.js'
+import { cwd, stdin as input, stdout as output } from 'node:process'
+import { getUserName } from './handler/username.js'
+import { exit } from './command/exit.js'
+import { logCurrentPath } from './command/log.js'
+import { up } from './command/up.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -12,28 +13,36 @@ const main = async () => {
 
     if (userName) {
       const commands = {
-        '.exit': () => exit(userName),
+        '.exit': ({ userName }) => exit(userName),
+        'up': ({ currentPath }) => {
+          return { currentPath: up(currentPath) }
+        },
       }
+      let currentPath = cwd()
+      let commandArgs = { currentPath }
 
       console.log(`Welcome to the File Manager, ${userName}!\n`)
-      logCurrentDirectory()
+      logCurrentPath(currentPath)
 
       const readline = createInterface({ input, output, terminal: false })
 
       readline.on('line', (line) => {
-        logCurrentDirectory()
-
         const [command, ...args] = line.split(' ')
+        commandArgs = { currentPath, userName, ...args }
 
         const currentCommand = commands[command]
-        const isCommandNotExists = !currentCommand;
+        const isCurrentCommandMissed = !currentCommand
 
-        if (isCommandNotExists) {
+        if (isCurrentCommandMissed) {
           console.error(ERROR_MESSAGE_OPERATION_FAILED)
           return
         }
 
-        currentCommand(...args);
+        commandArgs = currentCommand({ ...commandArgs })
+
+        currentPath = commandArgs.currentPath
+
+        logCurrentPath(currentPath)
       })
     }
     else {
@@ -41,7 +50,8 @@ const main = async () => {
     }
   }
   catch (error) {
-    console.error(error.message)
+    console.error(error)
+    // console.error(error.message)
     throw new Error(ERROR_MESSAGE_OPERATION_FAILED)
   }
 }
