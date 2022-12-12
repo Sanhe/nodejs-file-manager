@@ -3,9 +3,10 @@ import { cwd, stdin as input, stdout as output } from 'node:process'
 import { getUserName } from './handler/username.js'
 import { exit } from './command/exit.js'
 import { logCurrentPath } from './command/log.js'
-import { up } from './command/up.js'
-import { cd } from './command/cd.js'
-import { ls } from './command/ls.js'
+import { up } from './command/navigation/up.js'
+import { cd } from './command/navigation/cd.js'
+import { ls } from './command/navigation/ls.js'
+import { cat } from './command/file/cat.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -26,6 +27,11 @@ const main = async () => {
           return cd(path)
       },
       'ls': ls,
+      'cat': async (args) => {
+        const path = args[0]
+
+        return await cat(path)
+      },
     }
     let currentPath = cwd()
     let commandArgs = {}
@@ -35,7 +41,7 @@ const main = async () => {
 
     const readline = createInterface({ input, output, terminal: false })
 
-    readline.on('line', (line) => {
+    readline.on('line', async (line) => {
       const [command, ...args] = line.split(' ')
       commandArgs = { userName, ...args }
 
@@ -48,7 +54,7 @@ const main = async () => {
       }
 
       try {
-        commandArgs = currentCommand({ ...commandArgs })
+        commandArgs = await currentCommand({ ...commandArgs })
       } catch (error) {
         console.error(ERROR_MESSAGE_OPERATION_FAILED)
         return
