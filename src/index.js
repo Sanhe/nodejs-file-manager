@@ -5,6 +5,7 @@ import { exit } from './command/exit.js'
 import { logCurrentPath } from './command/log.js'
 import { up } from './command/up.js'
 import { cd } from './command/cd.js'
+import { ls } from './command/ls.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -24,11 +25,12 @@ const main = async () => {
 
           return cd(path)
       },
+      'ls': ls,
     }
     let currentPath = cwd()
     let commandArgs = {}
 
-    console.log(`Welcome to the File Manager, ${userName}!\n`)
+    console.info(`Welcome to the File Manager, ${userName}!\n`)
     logCurrentPath(currentPath)
 
     const readline = createInterface({ input, output, terminal: false })
@@ -44,7 +46,6 @@ const main = async () => {
         console.error(ERROR_MESSAGE_OPERATION_FAILED)
         return
       }
-      console.log(commandArgs)
 
       try {
         commandArgs = currentCommand({ ...commandArgs })
