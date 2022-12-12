@@ -4,6 +4,7 @@ import { getUserName } from './handler/username.js'
 import { exit } from './command/exit.js'
 import { logCurrentPath } from './command/log.js'
 import { up } from './command/up.js'
+import { cd } from './command/cd.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -11,47 +12,55 @@ const main = async () => {
   try {
     const userName = getUserName()
 
-    if (userName) {
-      const commands = {
-        '.exit': ({ userName }) => exit(userName),
-        'up': ({ currentPath }) => {
-          return { currentPath: up(currentPath) }
-        },
-      }
-      let currentPath = cwd()
-      let commandArgs = { currentPath }
-
-      console.log(`Welcome to the File Manager, ${userName}!\n`)
-      logCurrentPath(currentPath)
-
-      const readline = createInterface({ input, output, terminal: false })
-
-      readline.on('line', (line) => {
-        const [command, ...args] = line.split(' ')
-        commandArgs = { currentPath, userName, ...args }
-
-        const currentCommand = commands[command]
-        const isCurrentCommandMissed = !currentCommand
-
-        if (isCurrentCommandMissed) {
-          console.error(ERROR_MESSAGE_OPERATION_FAILED)
-          return
-        }
-
-        commandArgs = currentCommand({ ...commandArgs })
-
-        currentPath = commandArgs.currentPath
-
-        logCurrentPath(currentPath)
-      })
-    }
-    else {
+    if (!userName) {
       throw new Error('Username is not provided')
     }
+
+    const commands = {
+      '.exit': ({ userName }) => exit(userName),
+      'up': up,
+      'cd': (args) => {
+          const path = args[0]
+
+          return cd(path)
+      },
+    }
+    let currentPath = cwd()
+    let commandArgs = {}
+
+    console.log(`Welcome to the File Manager, ${userName}!\n`)
+    logCurrentPath(currentPath)
+
+    const readline = createInterface({ input, output, terminal: false })
+
+    readline.on('line', (line) => {
+      const [command, ...args] = line.split(' ')
+      commandArgs = { userName, ...args }
+
+      const currentCommand = commands[command]
+      const isCurrentCommandMissed = !currentCommand
+
+      if (isCurrentCommandMissed) {
+        console.error(ERROR_MESSAGE_OPERATION_FAILED)
+        return
+      }
+      console.log(commandArgs)
+
+      try {
+        commandArgs = currentCommand({ ...commandArgs })
+      } catch (error) {
+        console.error(ERROR_MESSAGE_OPERATION_FAILED)
+        return
+      }
+
+      currentPath = cwd()
+
+      logCurrentPath(currentPath)
+    })
   }
   catch (error) {
-    console.error(error)
-    // console.error(error.message)
+    // console.error(error)
+    console.error(error.message)
     throw new Error(ERROR_MESSAGE_OPERATION_FAILED)
   }
 }
