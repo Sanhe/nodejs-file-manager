@@ -1,8 +1,8 @@
-// import { argv } from 'node:process';
+import { argv } from 'node:process'
 
 const getUserName = () => {
   try {
-    const userNameArg = process.argv.find(arg => arg.startsWith('--username'))
+    const userNameArg = argv.find(arg => arg.startsWith('--username'))
     const userName = userNameArg?.indexOf('=')
       ? userNameArg.split('=')[1]
       : undefined
