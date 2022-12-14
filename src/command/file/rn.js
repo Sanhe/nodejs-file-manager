@@ -1,4 +1,4 @@
-import { rename } from "node:fs/promises";
+import { rename } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 
 const rn = async (pathToFile, newFileName) => {
@@ -8,8 +8,9 @@ const rn = async (pathToFile, newFileName) => {
     const resolvedPathToDir = dirname(resolvedPath)
     const resolvedNewPath = resolve(resolvedPathToDir, newFileName)
 
-    await rename(resolvedPath, resolvedNewPath);
-  } catch (error) {
+    await rename(resolvedPath, resolvedNewPath)
+  }
+  catch (error) {
     throw new Error(error)
   }
 }
