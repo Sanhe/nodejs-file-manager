@@ -11,6 +11,7 @@ import { add } from './command/file/add.js'
 import { rn } from './command/file/rn.js'
 import { cp } from './command/file/cp.js'
 import { mv } from './command/file/mv.js'
+import { rm } from './command/file/rm.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -58,6 +59,11 @@ const main = async () => {
         const pathDirectoryDest = args[1]
 
         return await mv(pathToFile, pathDirectoryDest)
+      },
+      'rm': async (args) => {
+        const pathToFile = args[0]
+
+        return await rm(pathToFile);
       }
     }
     let currentPath = cwd()

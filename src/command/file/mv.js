@@ -1,6 +1,5 @@
-import { rm } from "node:fs/promises";
-import { resolve } from 'node:path'
 import { cp } from './cp.js'
+import { rm } from './rm.js'
 
 const mv = async (sourceFilePath, destFilePath) => {
   try {
@@ -10,8 +9,7 @@ const mv = async (sourceFilePath, destFilePath) => {
       throw new Error('File is not coppied')
     }
 
-    const resolvedSourcePath = resolve(sourceFilePath)
-    return await rm(resolvedSourcePath)
+    return await rm(sourceFilePath)
   }
   catch (error) {
     throw new Error(error)
