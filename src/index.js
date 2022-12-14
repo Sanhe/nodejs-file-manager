@@ -8,6 +8,7 @@ import { cd } from './command/navigation/cd.js'
 import { ls } from './command/navigation/ls.js'
 import { cat } from './command/file/cat.js'
 import { add } from './command/file/add.js'
+import { rn } from './command/file/rn.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -37,6 +38,12 @@ const main = async () => {
         const path = args[0]
 
         return await add(path)
+      },
+      'rn': async (args) => {
+        const path = args[0]
+        const newFileName = args[1]
+
+        return await rn(path, newFileName)
       }
     }
     let currentPath = cwd()
