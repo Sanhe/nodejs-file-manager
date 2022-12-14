@@ -15,11 +15,11 @@ const getReadStreamFromSourceFilePath = async (sourceFilePath) => {
   }
 }
 
-const getWriteStreamToDestFilePath = async (sourceFilePath, destFilePath) => {
+const getWriteStreamToDestFilePath = async (sourceFilePath, destDirectoryPath) => {
   try {
     const resolvedPath = resolve(sourceFilePath)
     const fileName = basename(resolvedPath)
-    const resolvedDestPath = resolve(destFilePath, fileName)
+    const resolvedDestPath = resolve(destDirectoryPath, fileName)
 
     const fileHandleDest = await open(resolvedDestPath, 'a+')
 
@@ -30,13 +30,13 @@ const getWriteStreamToDestFilePath = async (sourceFilePath, destFilePath) => {
   }
 }
 
-const cp = async (sourceFilePath, destFilePath) => {
+const cp = async (sourceFilePath, destDirectoryPath) => {
   try {
     const readStream = await getReadStreamFromSourceFilePath(sourceFilePath)
-    const writeStream = await getWriteStreamToDestFilePath(sourceFilePath, destFilePath)
+    const writeStream = await getWriteStreamToDestFilePath(sourceFilePath, destDirectoryPath)
 
     readStream.pipe(writeStream)
-    await finished(readStream)
+    return await finished(readStream)
   }
   catch (error) {
     throw new Error(error)

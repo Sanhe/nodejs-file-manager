@@ -10,6 +10,7 @@ import { cat } from './command/file/cat.js'
 import { add } from './command/file/add.js'
 import { rn } from './command/file/rn.js'
 import { cp } from './command/file/cp.js'
+import { mv } from './command/file/mv.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -47,10 +48,16 @@ const main = async () => {
         return await rn(path, newFileName)
       },
       'cp': async (args) => {
-        const path = args[0]
+        const pathToFile = args[0]
         const pathDirectoryDest = args[1]
 
-        return await cp(path, pathDirectoryDest)
+        return await cp(pathToFile, pathDirectoryDest)
+      },
+      'mv': async (args) => {
+        const pathToFile = args[0]
+        const pathDirectoryDest = args[1]
+
+        return await mv(pathToFile, pathDirectoryDest)
       }
     }
     let currentPath = cwd()
@@ -87,7 +94,6 @@ const main = async () => {
     })
   }
   catch (error) {
-    // console.error(error)
     console.error(error.message)
     throw new Error(ERROR_MESSAGE_OPERATION_FAILED)
   }
