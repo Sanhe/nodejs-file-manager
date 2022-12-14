@@ -7,6 +7,7 @@ import { up } from './command/navigation/up.js'
 import { cd } from './command/navigation/cd.js'
 import { ls } from './command/navigation/ls.js'
 import { cat } from './command/file/cat.js'
+import { add } from './command/file/add.js'
 
 const ERROR_MESSAGE_OPERATION_FAILED = 'Operation failed'
 
@@ -32,6 +33,11 @@ const main = async () => {
 
         return await cat(path)
       },
+      'add': async (args) => {
+        const path = args[0]
+
+        return await add(path)
+      }
     }
     let currentPath = cwd()
     let commandArgs = {}

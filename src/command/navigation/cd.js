@@ -1,8 +1,10 @@
-import { chdir, cwd } from 'node:process'
+import { chdir } from 'node:process'
+import { resolve } from 'node:path'
 
-const cd = (path) => {
+const cd = (inputPath) => {
   try {
-    chdir(path)
+    const resolvedPath = resolve(inputPath)
+    chdir(resolvedPath)
   }
   catch (error) {
     throw new Error(error)
