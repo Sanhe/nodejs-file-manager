@@ -8,7 +8,6 @@ const cd = (inputPath) => {
     chdir(resolvedPath);
   }
   catch (error) {
-
     throw new OperationFailedError();
   }
 };

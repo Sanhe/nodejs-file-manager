@@ -1,19 +1,19 @@
-import { rename } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { rename } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
 import { OperationFailedError } from '../../error/OperationFailedError.js';
 
 const rn = async (pathToFile, newFileName) => {
   try {
-    const resolvedPath = resolve(pathToFile)
+    const resolvedPath = resolve(pathToFile);
 
-    const resolvedPathToDir = dirname(resolvedPath)
-    const resolvedNewPath = resolve(resolvedPathToDir, newFileName)
+    const resolvedPathToDir = dirname(resolvedPath);
+    const resolvedNewPath = resolve(resolvedPathToDir, newFileName);
 
-    await rename(resolvedPath, resolvedNewPath)
+    await rename(resolvedPath, resolvedNewPath);
   }
   catch (error) {
     throw new OperationFailedError();
   }
-}
+};
 
-export { rn }
+export { rn };

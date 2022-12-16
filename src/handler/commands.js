@@ -8,7 +8,7 @@ import { rn } from '../command/file/rn.js';
 import { cp } from '../command/file/cp.js';
 import { mv } from '../command/file/mv.js';
 import { rm } from '../command/file/rm.js';
-import { os } from '../command/os.js';
+import { os } from '../command/os/os.js';
 import { InvalidInputError } from '../error/InvalidInputError.js';
 
 const getArg = (args, index = 0) => {

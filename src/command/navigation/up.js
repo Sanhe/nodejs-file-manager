@@ -1,12 +1,12 @@
-import { chdir } from 'node:process'
+import { chdir } from 'node:process';
 
 const up = () => {
   try {
-    chdir('..')
+    chdir('..');
   }
   catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
-export { up }
+export { up };
