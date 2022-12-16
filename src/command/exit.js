@@ -1,8 +1,10 @@
 import { exit as pExit } from 'node:process';
+import { printExitMessage } from '../handler/message.js';
 
 const exit = (userName) => {
-    console.info(`Thank you for using File Manager, ${userName}, goodbye!`)
-    pExit(0);
-}
+  console.info('');
+  printExitMessage(userName);
+  pExit(0);
+};
 
 export { exit };

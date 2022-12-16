@@ -1,14 +1,16 @@
-import { chdir } from 'node:process'
-import { resolve } from 'node:path'
+import { chdir } from 'node:process';
+import { resolve } from 'node:path';
+import { OperationFailedError } from '../../error/OperationFailedError.js';
 
 const cd = (inputPath) => {
   try {
-    const resolvedPath = resolve(inputPath)
-    chdir(resolvedPath)
+    const resolvedPath = resolve(inputPath);
+    chdir(resolvedPath);
   }
   catch (error) {
-    throw new Error(error)
-  }
-}
 
-export { cd }
+    throw new OperationFailedError();
+  }
+};
+
+export { cd };

@@ -1,5 +1,6 @@
 import { rename } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
+import { OperationFailedError } from '../../error/OperationFailedError.js';
 
 const rn = async (pathToFile, newFileName) => {
   try {
@@ -11,7 +12,7 @@ const rn = async (pathToFile, newFileName) => {
     await rename(resolvedPath, resolvedNewPath)
   }
   catch (error) {
-    throw new Error(error)
+    throw new OperationFailedError();
   }
 }
 

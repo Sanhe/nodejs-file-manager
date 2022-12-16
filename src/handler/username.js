@@ -1,22 +1,17 @@
-import { argv } from 'node:process'
+import { argv } from 'node:process';
+import { InvalidInputError } from '../error/InvalidInputError.js';
 
 const getUserName = () => {
-  try {
-    const userNameArg = argv.find(arg => arg.startsWith('--username'))
-    const userName = userNameArg?.indexOf('=')
-      ? userNameArg.split('=')[1]
-      : undefined
+  const userNameArg = argv.find(arg => arg.startsWith('--username'));
+  const userName = userNameArg?.indexOf('=')
+    ? userNameArg.split('=')[1]
+    : null;
 
-    if (!userName) {
-      throw new Error('Username is not provided')
-    }
-
-    return userName
+  if (!userName) {
+    throw new InvalidInputError();
   }
-  catch (error) {
-    console.log(error.message)
-    throw new Error(error)
-  }
-}
 
-export { getUserName }
+  return userName;
+};
+
+export { getUserName };

@@ -1,33 +1,42 @@
-import { readdir } from 'node:fs/promises'
-import { cwd } from 'node:process'
+import { readdir } from 'node:fs/promises';
+import { cwd } from 'node:process';
+import { OperationFailedError } from '../../error/OperationFailedError.js';
 
-const TYPE_DIRECTORY = 'directory'
-const TYPE_FILE = 'file'
+const TYPE_DIRECTORY = 'directory';
+const TYPE_FILE = 'file';
 
 const formatFiles = (file) => ({
   name: file.name,
   type: file.isDirectory() ? TYPE_DIRECTORY : TYPE_FILE,
-})
+});
 
 const sortFiles = (file1, file2) => {
-  if (file1.type === file2.type) {
-    return file1.name.localeCompare(file2.name)
-  }
+  const sortField = file1.type === file2.type
+    ? 'name'
+    : 'type';
+  const field1 = file1[sortField];
+  const field2 = file2[sortField];
 
-  return file1.type.localeCompare(file2.type)
-}
+  return field1.localeCompare(field2);
+};
 
 const ls = async () => {
   try {
-    const path = cwd()
-    const files = await readdir(path, { withFileTypes: true })
-    const table = files.map(formatFiles).sort(sortFiles)
+    const path = cwd();
+    const files = await readdir(path, { withFileTypes: true });
+    const table = files.map(formatFiles).sort(sortFiles);
 
-    console.table(table)
+    if (!table.length) {
+      console.info('No files or directories');
+
+      return;
+    }
+
+    console.table(table);
   }
   catch (error) {
-    throw new Error(error)
+    throw new OperationFailedError();
   }
-}
+};
 
-export { ls }
+export { ls };
