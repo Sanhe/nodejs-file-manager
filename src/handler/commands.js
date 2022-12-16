@@ -10,6 +10,7 @@ import { mv } from '../command/file/mv.js';
 import { rm } from '../command/file/rm.js';
 import { os } from '../command/os/os.js';
 import { InvalidInputError } from '../error/InvalidInputError.js';
+import { calculateHash } from '../command/hash.js';
 
 const getArg = (args, index = 0) => {
   const arg = args[index];
@@ -69,6 +70,11 @@ const commands = {
 
     return await os(option);
   },
+  'hash': async ({ args }) => {
+    const option = getArg(args);
+
+    return await calculateHash(option);
+  }
 };
 
 export { commands };
