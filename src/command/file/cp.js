@@ -34,9 +34,7 @@ const cp = async (sourceFilePath, destDirectoryPath) => {
       destDirectoryPath);
 
     readStream.pipe(writeStream);
-    await finished(readStream);
-
-    return true;
+    return await finished(readStream);
   }
   catch {
     throw new OperationFailedError();

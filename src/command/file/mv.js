@@ -7,14 +7,15 @@ const mv = async (sourceFilePath, destFilePath) => {
     const isNotCopied = await cp(sourceFilePath, destFilePath);
 
     if (isNotCopied) {
-      throw new Error('File is not coppied');
+      throw new Error('File is not copied');
     }
 
     await rm(sourceFilePath);
 
     return true;
   }
-  catch {
+  catch (e) {
+    console.log(e.message);
     throw new OperationFailedError();
   }
 };

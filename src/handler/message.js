@@ -11,4 +11,8 @@ const printExitMessage = (userName) => {
   console.info(`Thank you for using File Manager, ${userName}, goodbye!`);
 };
 
-export { printWelcomeMessage, printCurrentPath, printExitMessage };
+const printErrorMessage = (errorMessage) => {
+  console.error('Error:', errorMessage);
+}
+
+export { printWelcomeMessage, printCurrentPath, printExitMessage, printErrorMessage };

@@ -1,7 +1,7 @@
 import { cwd } from 'node:process';
 import { parseCommand } from './commandParser.js';
 import { InvalidInputError } from '../error/InvalidInputError.js';
-import { printCurrentPath } from './message.js';
+import { printCurrentPath, printErrorMessage } from './message.js';
 import { commands } from './commands.js';
 
 const prompt = (readline) => {
@@ -32,7 +32,7 @@ const commandReader = async (line, commandReaderArgs) => {
     await currentCommand({ ...commandArgs });
   }
   catch (error) {
-    console.error('Error:', error.message);
+    printErrorMessage(error.message);
   }
   finally {
     prompt(readline);

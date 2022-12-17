@@ -1,15 +1,21 @@
 import { createInterface } from 'node:readline';
-import { cwd, stdin as input, stdout as output } from 'node:process';
+import { homedir } from 'node:os';
+import { chdir, cwd, stdin as input, stdout as output } from 'node:process';
 import { getUserName } from './handler/username.js';
 import { commandReader } from './handler/commandReader.js';
 import { exit } from './command/exit.js';
-import { printCurrentPath, printWelcomeMessage } from './handler/message.js';
+import {
+  printCurrentPath,
+  printErrorMessage,
+  printWelcomeMessage,
+} from './handler/message.js';
 
 const main = async () => {
   try {
     const userName = getUserName();
 
     printWelcomeMessage(userName);
+    chdir(homedir());
     printCurrentPath(cwd());
 
     const readline = createInterface({ input, output });
@@ -22,7 +28,7 @@ const main = async () => {
       on('close', () => exit(userName));
   }
   catch (error) {
-    console.error(error.message);
+    printErrorMessage(error.message);
   }
 };
 

@@ -3,23 +3,32 @@ import { OperationFailedError } from '../../error/OperationFailedError.js';
 import { InvalidInputError } from '../../error/InvalidInputError.js';
 
 const eol = () => {
-  console.info(osNative.EOL);
+  console.log(`Default EOL: ${JSON.stringify(osNative.EOL)}`)
 };
 
 const cpus = () => {
-  console.info(osNative.cpus());
+  const cpus = osNative.cpus();
+
+  console.info(`Number of CPUs: ${cpus.length}`);
+  console.info(`CPU model: ${cpus[0].model}`);
+
+  cpus.forEach((cpu, index) => {
+    const speedInGHz = `${(cpu.speed / 1000)} GHz`;
+
+    console.info(`- CPU core #${index + 1} speed: ${speedInGHz} GHz`);
+  });
 };
 
 const homedir = () => {
-  console.info(osNative.homedir());
+  console.info(`Home directory: ${osNative.homedir()}`);
 };
 
 const username = () => {
-  console.info(osNative.userInfo().username);
+  console.info(`System user name: ${osNative.userInfo().username}`);
 };
 
 const architecture = () => {
-  console.info(osNative.arch());
+  console.info(`Architecture: ${osNative.arch()}`);
 };
 
 const options = {

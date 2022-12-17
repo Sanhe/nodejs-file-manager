@@ -10,9 +10,7 @@ const cat = async (filePath) => {
     const readStream = fileHandle.createReadStream({ encoding: 'utf8' });
 
     readStream.pipe(stdout);
-    await finished(readStream);
-
-    return true;
+    return await finished(readStream);
   }
   catch {
     throw new OperationFailedError();
