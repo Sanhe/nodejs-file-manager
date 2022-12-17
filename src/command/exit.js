@@ -5,6 +5,8 @@ const exit = (userName) => {
   console.info('');
   printExitMessage(userName);
   pExit(0);
+
+  return true;
 };
 
 export { exit };

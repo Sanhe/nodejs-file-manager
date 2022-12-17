@@ -8,8 +8,10 @@ const add = async (fileName) => {
     const path = cwd();
     const resolvedPath = resolve(path, fileName);
     await writeFile(resolvedPath, '', { flag: 'wx+' });
+
+    return true;
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };

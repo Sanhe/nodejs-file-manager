@@ -1,11 +1,12 @@
 import { chdir } from 'node:process';
+import { OperationFailedError } from '../../error/OperationFailedError.js';
 
 const up = () => {
   try {
     chdir('..');
   }
-  catch (error) {
-    throw new Error(error);
+  catch {
+    throw new OperationFailedError();
   }
 };
 

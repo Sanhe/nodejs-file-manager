@@ -6,9 +6,11 @@ const rm = async (filePath) => {
   try {
     const resolvedFilePath = await resolve(filePath);
 
-    return await rmNative(resolvedFilePath);
+    await rmNative(resolvedFilePath);
+
+    return true;
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };

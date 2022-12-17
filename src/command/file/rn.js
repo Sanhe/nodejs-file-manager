@@ -10,8 +10,10 @@ const rn = async (pathToFile, newFileName) => {
     const resolvedNewPath = resolve(resolvedPathToDir, newFileName);
 
     await rename(resolvedPath, resolvedNewPath);
+
+    return true;
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };

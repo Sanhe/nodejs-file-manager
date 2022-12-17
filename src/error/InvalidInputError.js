@@ -1,7 +1,7 @@
 export class InvalidInputError extends Error {
   constructor (message = 'Invalid input') {
-    super(message)
+    super(message);
 
-    this.name = 'InvalidInputError'
+    this.name = 'InvalidInputError';
   }
 }

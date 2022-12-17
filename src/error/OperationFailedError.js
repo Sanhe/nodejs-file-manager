@@ -1,7 +1,7 @@
 export class OperationFailedError extends Error {
   constructor (message = 'Operation failed') {
-    super(message)
+    super(message);
 
-    this.name = 'OperationFailedError'
+    this.name = 'OperationFailedError';
   }
 }

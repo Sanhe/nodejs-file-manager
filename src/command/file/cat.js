@@ -11,8 +11,10 @@ const cat = async (filePath) => {
 
     readStream.pipe(stdout);
     await finished(readStream);
+
+    return true;
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };

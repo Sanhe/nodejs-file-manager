@@ -6,8 +6,10 @@ const cd = (inputPath) => {
   try {
     const resolvedPath = resolve(inputPath);
     chdir(resolvedPath);
+
+    return true;
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };

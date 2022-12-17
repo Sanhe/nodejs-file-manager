@@ -3,8 +3,8 @@ const printWelcomeMessage = (userName) => {
 };
 
 const printCurrentPath = (currentPath) => {
-  console.info(`You are currently in ${currentPath}`)
-}
+  console.info(`You are currently in ${currentPath}`);
+};
 
 const printExitMessage = (userName) => {
   console.info('');

@@ -13,10 +13,11 @@ const calculateHash = async (pathToFile) => {
 
     await pipeline(inputStream, hash);
 
-    console.log(hash.digest('hex'));
+    console.info(hash.digest('hex'));
+
+    return true;
   }
-  catch (error) {
-    console.log(error.message);
+  catch {
     throw new OperationFailedError();
   }
 }

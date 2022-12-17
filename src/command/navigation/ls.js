@@ -34,7 +34,7 @@ const ls = async () => {
 
     console.table(table);
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };

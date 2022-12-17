@@ -38,7 +38,9 @@ const os = async (option) => {
       throw new InvalidInputError();
     }
 
-    return await optionHandler();
+    await optionHandler();
+
+    return true;
   }
   catch (error) {
     if (error instanceof InvalidInputError) {

@@ -11,10 +11,13 @@ import { rm } from '../command/file/rm.js';
 import { os } from '../command/os/os.js';
 import { InvalidInputError } from '../error/InvalidInputError.js';
 import { calculateHash } from '../command/hash.js';
+import {
+  compressBrotli,
+  decompressBrotli,
+} from '../command/compress/compressor.js';
 
 const getArg = (args, index = 0) => {
   const arg = args[index];
-console.log(args, arg);
   const isArgMissed = !arg;
 
   if (isArgMissed) {
@@ -74,7 +77,19 @@ const commands = {
     const option = getArg(args);
 
     return await calculateHash(option);
-  }
+  },
+  'compress': async ({ args }) => {
+    const pathToFile = getArg(args);
+    const pathToDestination = getArg(args, 1);
+
+    return await compressBrotli(pathToFile, pathToDestination);
+  },
+  'decompress': async ({ args }) => {
+    const pathToFile = getArg(args);
+    const pathToDestination = getArg(args, 1);
+
+    return await decompressBrotli(pathToFile, pathToDestination);
+  },
 };
 
 export { commands };

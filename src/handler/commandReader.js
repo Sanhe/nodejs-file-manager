@@ -29,12 +29,7 @@ const commandReader = async (line, commandReaderArgs) => {
     const commandArgs = { userName, ...args };
     const currentCommand = getCommand(command);
 
-    // try {
-      await currentCommand({ ...commandArgs });
-    // }
-    // catch (error) {
-    //   console.error(error.message);
-    // }
+    await currentCommand({ ...commandArgs });
   }
   catch (error) {
     console.error('Error:', error.message);

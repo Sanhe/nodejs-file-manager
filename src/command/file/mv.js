@@ -10,9 +10,11 @@ const mv = async (sourceFilePath, destFilePath) => {
       throw new Error('File is not coppied');
     }
 
-    return await rm(sourceFilePath);
+    await rm(sourceFilePath);
+
+    return true;
   }
-  catch (error) {
+  catch {
     throw new OperationFailedError();
   }
 };
